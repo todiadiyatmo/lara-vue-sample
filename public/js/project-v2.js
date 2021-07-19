@@ -1918,6 +1918,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -1933,8 +1935,8 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
     state: function state() {
       return _store_project_v2_store__WEBPACK_IMPORTED_MODULE_1__.default.getters[_store_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_STATE];
     },
-    validation: function validation() {
-      return _store_project_v2_store__WEBPACK_IMPORTED_MODULE_1__.default.getters[_store_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_VALIDATIONS];
+    errors: function errors() {
+      return _store_project_v2_store__WEBPACK_IMPORTED_MODULE_1__.default.getters[_store_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_ERRORS];
     },
     types: function types() {
       return _store_types__WEBPACK_IMPORTED_MODULE_0__.default;
@@ -2024,23 +2026,6 @@ var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 /***/ }),
 
-/***/ "./resources/js/lib/event-bus.js":
-/*!***************************************!*\
-  !*** ./resources/js/lib/event-bus.js ***!
-  \***************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "EventBus": () => (/* binding */ EventBus)
-/* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-
-var EventBus = new vue__WEBPACK_IMPORTED_MODULE_0__.default();
-
-/***/ }),
-
 /***/ "./resources/js/lib/lib.js":
 /*!*********************************!*\
   !*** ./resources/js/lib/lib.js ***!
@@ -2060,6 +2045,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/model/errors.js":
+/*!**************************************!*\
+  !*** ./resources/js/model/errors.js ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Errors)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Errors = /*#__PURE__*/function () {
+  /**
+   * Create a new Errors instance.
+   */
+  function Errors() {
+    _classCallCheck(this, Errors);
+
+    this.errors = {};
+  }
+  /**
+   * Determine if an errors exists for the given field.
+   *
+   * @param {string} field
+   */
+
+
+  _createClass(Errors, [{
+    key: "has",
+    value: function has(field) {
+      return this.errors.hasOwnProperty(field);
+    }
+    /**
+     * Determine if we have any errors.
+     */
+
+  }, {
+    key: "any",
+    value: function any() {
+      return Object.keys(this.errors).length > 0;
+    }
+    /**
+     * Retrieve the error message for a field.
+     *
+     * @param {string} field
+     */
+
+  }, {
+    key: "get",
+    value: function get(field) {
+      if (this.errors[field]) {
+        return this.errors[field][0];
+      }
+    }
+    /**
+     * Record the new errors.
+     *
+     * @param {object} errors
+     */
+
+  }, {
+    key: "record",
+    value: function record(errors) {
+      this.errors = errors;
+    }
+    /**
+     * Clear one or all error fields.
+     *
+     * @param {string|null} field
+     */
+
+  }, {
+    key: "clear",
+    value: function clear(field) {
+      if (field) {
+        delete this.errors[field];
+        return;
+      }
+
+      this.errors = {};
+    }
+  }]);
+
+  return Errors;
+}();
+
+
+
+/***/ }),
+
 /***/ "./resources/js/store/modules/form-module.js":
 /*!***************************************************!*\
   !*** ./resources/js/store/modules/form-module.js ***!
@@ -2075,9 +2156,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _lib_lib_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../lib/lib.js */ "./resources/js/lib/lib.js");
+/* harmony import */ var _model_errors__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../model/errors */ "./resources/js/model/errors.js");
 var _mutations, _actions, _getters;
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -2090,11 +2173,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       name: "",
       description: ""
     },
-    validations: [],
+    errors: new _model_errors__WEBPACK_IMPORTED_MODULE_3__.default(),
     state: _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.STATE_CREATE
   },
-  mutations: (_mutations = {}, _defineProperty(_mutations, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_VALIDATION, function (state, payload) {
-    state.validations = payload;
+  mutations: (_mutations = {}, _defineProperty(_mutations, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_ERRORS, function (state, payload) {
+    state.errors.record(payload);
   }), _defineProperty(_mutations, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_STATE, function (state, payload) {
     state.state = payload;
   }), _defineProperty(_mutations, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_PROJECT, function (state, payload) {
@@ -2128,17 +2211,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }); // reset form
 
       dispatch(_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.RESET_FORM);
-    })["catch"](function (response) {
+    })["catch"](function (error) {
       commit(_types__WEBPACK_IMPORTED_MODULE_0__.default.MESSAGE.SET_MESSAGE, {
         visible: true,
-        title: response.data.message,
+        title: error.response.data.message,
         "class": "is-danger"
       });
+      commit(_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_ERRORS, error.response.data.errors);
     });
   }), _defineProperty(_actions, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.CREATE_PROJECT, function (_ref3, payload) {
     var commit = _ref3.commit,
         dispatch = _ref3.dispatch,
-        state = _ref3.state;
+        state = _ref3.state,
+        getters = _ref3.getters;
     axios__WEBPACK_IMPORTED_MODULE_1___default().post('/project/', {
       name: payload.project.name,
       description: payload.project.description
@@ -2158,6 +2243,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         title: error.response.data.message,
         "class": "is-danger"
       });
+      commit(_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_ERRORS, error.response.data.errors);
     });
   }), _defineProperty(_actions, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.DELETE_PROJECT, function (_ref4, payload) {
     var commit = _ref4.commit,
@@ -2186,10 +2272,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       name: "",
       description: ""
     });
+    commit(_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_ERRORS, new _model_errors__WEBPACK_IMPORTED_MODULE_3__.default());
     commit(_types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.SET_STATE, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.STATE_CREATE);
   }), _actions),
-  getters: (_getters = {}, _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_VALIDATIONS, function (state) {
-    return state.validations;
+  getters: (_getters = {}, _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_ERRORS, function (state) {
+    return state.errors;
   }), _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_STATE, function (state) {
     return state.state;
   }), _defineProperty(_getters, _types__WEBPACK_IMPORTED_MODULE_0__.default.FORM.GET_PROJECT, function (state) {
@@ -2345,8 +2432,8 @@ __webpack_require__.r(__webpack_exports__);
   FORM: {
     NAME: "FormModule",
     // validation
-    SET_VALIDATION: "SET_VALIDATION",
-    GET_VALIDATIONS: "GET_VALIDATIONS",
+    SET_ERRORS: "SET_ERRORS",
+    GET_ERRORS: "GET_ERRORS",
     // state
     STATE_CREATE: "STATE_CREATE",
     STATE_EDIT: "STATE_EDIT",
@@ -2898,6 +2985,7 @@ var render = function() {
               }
             ],
             staticClass: "input",
+            class: { "is-danger": _vm.errors.has("name") },
             attrs: { type: "text", placeholder: "Project Name" },
             domProps: { value: _vm.project.name },
             on: {
@@ -2909,7 +2997,14 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.errors.has("name")
+          ? _c("p", {
+              staticClass: "has-text-danger",
+              domProps: { textContent: _vm._s(_vm.errors.get("name")) }
+            })
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
@@ -2926,6 +3021,7 @@ var render = function() {
               }
             ],
             staticClass: "input",
+            class: { "is-danger": _vm.errors.has("description") },
             attrs: { type: "text", placeholder: "Project Description" },
             domProps: { value: _vm.project.description },
             on: {
@@ -2937,7 +3033,14 @@ var render = function() {
               }
             }
           })
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.errors.has("description")
+          ? _c("p", {
+              staticClass: "has-text-danger",
+              domProps: { textContent: _vm._s(_vm.errors.get("description")) }
+            })
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field is-grouped is-grouped-right" }, [
@@ -16566,31 +16669,30 @@ var __webpack_exports__ = {};
   !*** ./resources/js/project-v2.js ***!
   \************************************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _lib_event_bus_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib/event-bus.js */ "./resources/js/lib/event-bus.js");
-/* harmony import */ var _components_ProjectTableV2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProjectTableV2.vue */ "./resources/js/components/ProjectTableV2.vue");
-/* harmony import */ var _components_ProjectFormV2_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/ProjectFormV2.vue */ "./resources/js/components/ProjectFormV2.vue");
-/* harmony import */ var _components_MessageV2_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/MessageV2.vue */ "./resources/js/components/MessageV2.vue");
-/* harmony import */ var _store_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/types */ "./resources/js/store/types.js");
-/* harmony import */ var _store_project_v2_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store/project-v2-store */ "./resources/js/store/project-v2-store.js");
+/* harmony import */ var _components_ProjectTableV2_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ProjectTableV2.vue */ "./resources/js/components/ProjectTableV2.vue");
+/* harmony import */ var _components_ProjectFormV2_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/ProjectFormV2.vue */ "./resources/js/components/ProjectFormV2.vue");
+/* harmony import */ var _components_MessageV2_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/MessageV2.vue */ "./resources/js/components/MessageV2.vue");
+/* harmony import */ var _store_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/types */ "./resources/js/store/types.js");
+/* harmony import */ var _store_project_v2_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./store/project-v2-store */ "./resources/js/store/project-v2-store.js");
 // import Vue from 'vue/dist/vue.js'
 
 
+ // import { EventBus }   from './lib/event-bus.js'
 
 
 
 
 
 
-
-new vue__WEBPACK_IMPORTED_MODULE_7__.default({
+new vue__WEBPACK_IMPORTED_MODULE_6__.default({
   el: "#project",
   components: {
-    "project-table": _components_ProjectTableV2_vue__WEBPACK_IMPORTED_MODULE_2__.default,
-    "message": _components_MessageV2_vue__WEBPACK_IMPORTED_MODULE_4__.default,
-    "project-form": _components_ProjectFormV2_vue__WEBPACK_IMPORTED_MODULE_3__.default
+    "project-table": _components_ProjectTableV2_vue__WEBPACK_IMPORTED_MODULE_1__.default,
+    "message": _components_MessageV2_vue__WEBPACK_IMPORTED_MODULE_3__.default,
+    "project-form": _components_ProjectFormV2_vue__WEBPACK_IMPORTED_MODULE_2__.default
   }
 });
 })();

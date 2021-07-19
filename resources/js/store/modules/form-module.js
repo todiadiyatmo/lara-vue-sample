@@ -1,6 +1,7 @@
 import types from "../types"
 import axios from 'axios'
 import lib from '../../lib/lib.js'
+import Errors from "../../model/errors"
 
 export default  {
     // namespaced:true,
@@ -10,12 +11,12 @@ export default  {
             name:"",
             description:""
         },
-        validations: [],
+        errors: new Errors() ,
         state: types.FORM.STATE_CREATE
     },
     mutations: {
-        [types.FORM.SET_VALIDATION](state,payload) {
-            state.validations = payload
+        [types.FORM.SET_ERRORS](state,payload) {
+            state.errors.record(payload)
         },
         [types.FORM.SET_STATE](state,payload) {
             state.state = payload
@@ -37,7 +38,7 @@ export default  {
             axios.put('/project/'+payload.project.id, {
                 name:payload.project.name,
                 description:payload.project.description
-            }).then((response) => {                                
+            }).then( response => {                                
                 commit(types.MESSAGE.SET_MESSAGE,{                  
                     visible:true,
                     title:response.data.message,
@@ -49,16 +50,18 @@ export default  {
                 // reset form
                 dispatch(types.FORM.RESET_FORM)
             })
-            .catch((response) => {
+            .catch( error => {
                 commit(types.MESSAGE.SET_MESSAGE,{                  
                     visible:true,
-                    title:response.data.message,
+                    title:error.response.data.message,
                     class:"is-danger"                
                 })
+
+                commit(types.FORM.SET_ERRORS,error.response.data.errors)
             })
             
         },
-        [types.FORM.CREATE_PROJECT]({commit, dispatch,state}, payload) {       
+        [types.FORM.CREATE_PROJECT]({commit, dispatch,state,getters}, payload) {       
                        
             axios.post('/project/', {
                 name:payload.project.name,
@@ -80,6 +83,10 @@ export default  {
                     title:error.response.data.message,
                     class:"is-danger"                
                 })
+                commit(types.FORM.SET_ERRORS,error.response.data.errors)
+
+                
+
             })                  
         },
         [types.FORM.DELETE_PROJECT]({commit, dispatch,state}, payload) {       
@@ -108,12 +115,13 @@ export default  {
                 name:"",
                 description:""
             })
+            commit(types.FORM.SET_ERRORS,new Errors())
             commit(types.FORM.SET_STATE,types.FORM.STATE_CREATE)
         }
     },
     getters: {
-        [types.FORM.GET_VALIDATIONS](state) {
-            return state.validations
+        [types.FORM.GET_ERRORS](state) {
+            return state.errors
         },
         [types.FORM.GET_STATE](state) {
             return state.state

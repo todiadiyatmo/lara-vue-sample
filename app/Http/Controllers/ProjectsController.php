@@ -60,4 +60,8 @@ class ProjectsController extends Controller
     public function index2(Request $request) {
         return view('projects.index-v2');
     }
+
+    public function index3(Request $request) {
+        return view('projects.index-v3');
+    }
 }

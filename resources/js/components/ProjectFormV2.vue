@@ -5,14 +5,16 @@
     <div class="field">
         <label class="label">Name</label>
         <p class="control">
-            <input class="input" type="text" v-model="project.name" placeholder="Project Name" >
+            <input :class="{'is-danger':errors.has('name')}" class="input" type="text" v-model="project.name" placeholder="Project Name" >
         </p>
+        <p  v-if="errors.has('name')" v-text="errors.get('name')" class="has-text-danger"></p>
     </div>
     <div class="field">
         <label class="label">Description</label>
         <p class="control">
-        <input class="input" type="text"  v-model="project.description" placeholder="Project Description">
+            <input :class="{'is-danger':errors.has('description')}"  class="input" type="text" v-model="project.description" placeholder="Project Description">
         </p>
+        <p  v-if="errors.has('description')" v-text="errors.get('description')" class="has-text-danger"></p>
     </div>
     <div class="field is-grouped is-grouped-right">
         <p class="control">
@@ -44,8 +46,8 @@ export default {
         state() {
             return store.getters[types.FORM.GET_STATE]
         },
-        validation() {
-            return store.getters[types.FORM.GET_VALIDATIONS]
+        errors() {
+            return store.getters[types.FORM.GET_ERRORS]
         },
         types() {
             return types

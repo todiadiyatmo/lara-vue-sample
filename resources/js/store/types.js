@@ -2,8 +2,8 @@ export default {
   FORM : {
     NAME:"FormModule",
     // validation
-    SET_VALIDATION:"SET_VALIDATION",
-    GET_VALIDATIONS:"GET_VALIDATIONS",
+    SET_ERRORS:"SET_ERRORS",
+    GET_ERRORS:"GET_ERRORS",
     // state
     STATE_CREATE: "STATE_CREATE",
     STATE_EDIT: "STATE_EDIT",

@@ -2,7 +2,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
-import { EventBus }   from './lib/event-bus.js'
+// import { EventBus }   from './lib/event-bus.js'
 import ProjectTable from './components/ProjectTableV2.vue'
 import ProjectForm from './components/ProjectFormV2.vue'
 import Message from './components/MessageV2.vue'

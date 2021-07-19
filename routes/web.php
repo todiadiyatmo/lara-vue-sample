@@ -26,5 +26,6 @@ Route::get('/skills', function(){
 Route::post('project', [ProjectsController::class,'store']);
 Route::get('project', [ProjectsController::class,'index']);
 Route::get('project-v2', [ProjectsController::class,'index2']);
+Route::get('project-v3', [ProjectsController::class,'index3']);
 Route::delete('project/{projectId}', [ProjectsController::class,'destroy']);
 Route::put('project/{projectId}', [ProjectsController::class,'update']);

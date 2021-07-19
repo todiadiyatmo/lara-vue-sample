@@ -12153,6 +12153,18 @@ new vue__WEBPACK_IMPORTED_MODULE_0__.default({
       title: "Basic Reactive #2",
       description: "Binding model dengan input form",
       href: "/static-vue/basic-reactive-input.html"
+    }, {
+      title: "CRUD V1 ",
+      description: "Crud sederhana menggunakan Event Bus",
+      href: "/project"
+    }, {
+      title: "CRUD V2 ",
+      description: "Crud sederhana menggunakan VUEX",
+      href: "/project-v2"
+    }, {
+      title: "CRUD V3 ",
+      description: "(OTW) Crud menggunakan form dan pathify",
+      href: "/project-v3"
     }]
   }
 }); //  has-text-primary has-background-primary-light
