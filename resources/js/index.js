@@ -1,6 +1,7 @@
 // import Vue from 'vue/dist/vue.js'
 import Vue from 'vue'
 
+
 Vue.component('card',{
     props:['content'],
     data() {
@@ -28,6 +29,21 @@ new Vue({
                 title:"Basic Reactive #2",
                 description:"Binding model dengan input form",
                 href:"/static-vue/basic-reactive-input.html"
+            },
+            {
+                title:"Basic Axios ",
+                description:"Consume api dengan axios",
+                href:"/static-vue/basic-axios.html"
+            },
+            {
+                title:"Basic Component ",
+                description:"Component sederhana ",
+                href:"/static-vue/basic-component.html"
+            },
+            {
+                title:"Component Sample",
+                description:"Landing page versi component",
+                href:"/landing"
             },
             {
                 title:"CRUD V1 ",

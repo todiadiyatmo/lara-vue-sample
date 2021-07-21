@@ -16,6 +16,7 @@ mix.js(['resources/js/project.js'], 'public/js/project.js').vue({version:2})
 mix.js(['resources/js/project-v2.js'], 'public/js/project-v2.js').vue({version:2})
 mix.js(['resources/js/project-vuex-pathify.js'], 'public/js/project-vuex-pathify.js').vue({version:2})
 mix.js(['resources/js/index.js'], 'public/js/index.js').vue({version:2})
+mix.js(['resources/js/index-component-landing.js'], 'public/js/index-component-landing.js').vue({version:2})
 mix.postCss('resources/css/app.css', 'public/css')
 mix.sass('node_modules/bulma/bulma.sass','public/css')
 mix.styles(['public/css/bulma.css','public/css/app.css'], 'public/css/all-files.css');

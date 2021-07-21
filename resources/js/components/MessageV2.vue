@@ -1,4 +1,4 @@
-f<template>
+<template>
     <article class="message" :class="message.class" v-show="message.visible">
         <div class="message-header">
             <p>{{ message.title }} </p>
