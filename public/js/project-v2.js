@@ -3049,7 +3049,7 @@ var render = function() {
             ? _c(
                 "button",
                 { staticClass: "button is-primary", on: { click: _vm.submit } },
-                [_vm._v("\n            Submit\n            ")]
+                [_vm._v("\r\n            Submit\r\n            ")]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -3057,7 +3057,7 @@ var render = function() {
             ? _c(
                 "button",
                 { staticClass: "button is-primary", on: { click: _vm.update } },
-                [_vm._v("\n            Edit\n            ")]
+                [_vm._v("\r\n            Edit\r\n            ")]
               )
             : _vm._e()
         ])
