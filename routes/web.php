@@ -18,14 +18,20 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/landing', function () {
+    return view('index-component');
+});
+
 Route::get('/skills', function(){
     return ['PHP','javascript','ruby','phyton'];
 });
 
 // Route::get('projects/create', [ProjectsController::class,'create']);
-Route::post('project', [ProjectsController::class,'store']);
 Route::get('project', [ProjectsController::class,'index']);
 Route::get('project-v2', [ProjectsController::class,'index2']);
 Route::get('project-v3', [ProjectsController::class,'index3']);
+
+
+Route::post('project', [ProjectsController::class,'store']);
 Route::delete('project/{projectId}', [ProjectsController::class,'destroy']);
 Route::put('project/{projectId}', [ProjectsController::class,'update']);
